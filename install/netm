@@ -1,0 +1,1 @@
+﻿sudo docker cp tplink_jetstream.py cb7f8390d06c:/usr/local/lib/python3.11/site-packages/netmiko/tplink/tplink_jetstream.py

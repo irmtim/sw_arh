@@ -1,0 +1,7 @@
+1. Для установки LDAP Windows в Python нужно приложение python_ldap-3.4.0-cp310-cp310-win_amd64.whl
+2. Для сокращения (ошибки Pattern not detected: '[>#]'  )паузы при подключении к коммутаторам TPlinck по SSH при помощи библиотеки Netmiko
+необходимо поправить модуль TPlinck_jetstrim.py :class TPLinkJetStreamBase(CiscoSSHConnection)
+def session_preparation(self)
+	#self.clear_buffer() (закоментировал) В 2-ч местах
+
+	(External Libraries)--> site-packages
