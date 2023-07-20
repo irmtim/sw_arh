@@ -33,17 +33,17 @@ file_path = f"/usr/src/app/data/ARH_SW/"
 file_log_path1 = f"/usr/src/app/data/LOG_SW/netmiko/"
 file_log_path2 = f"/usr/src/app/data/LOG_SW/app/"
 
-pg_conn = 'postgresql://pg:pg@173.34.4.12:5434/SW_DB'
+pg_conn = 'postgresql://pg:pg@10.5.0.2:5432/SW_DB'
 
-tab_name = 'backup_sw2'
+tab_name = 'backup_sw'
 
 url_create = {
     'drivername': "postgresql",
     'username': "pg",
-    'host': "173.34.4.12",
+    'host': "10.5.0.2",
     'database': "SW_DB",
     'password': "pg",
-    'port': "5434"
+    'port': "5432"
 }
 
 model_sw = {

@@ -51,7 +51,7 @@ def ssh_con(ip: str):
             'password': config.sw_password,
             'device_type': d_t
         }
-        connect_err_log = f'{RTR["ip"]} type: {RTR["device_type"]} {datetime.datetime.now()}\n'
+        connect_err_log = f'{RTR["ip"]} type: {RTR["device_type"]} {datetime.datetime.now()} '
         try:
             net_conn = ConnectHandler(**RTR)
 
@@ -66,7 +66,7 @@ def ssh_con(ip: str):
 
             continue
 
-    return f'Err. Connection error or Device {IP.strip()} not in list', d_t
+    return f'Err. {connect_err_log}', d_t
 
 
 def tp_sg34_ser(net_conn) -> dict:
@@ -179,14 +179,14 @@ def vc_db(ip, content, ser_dict, file_path) -> str:
     except:
         flag = f'Can`t establish connection to database'
         return flag
-    sql_query = 'SELECT content, created_on FROM public.backup_sw2 where ip = %s order by created_on desc limit 1'
+    sql_query = 'SELECT content, created_on FROM public.backup_sw where ip = %s order by created_on desc limit 1'
     with conn.cursor() as curs:
         curs.execute(sql_query, (ip,))  ## IP.strip()
         data = curs.fetchone()
         conn.commit()
         if data is None or data[0] != content:
             curs.execute(
-                "INSERT INTO backup_sw2 (ip, model, serial, created_on, file_path, content) VALUES (%s, %s, %s, %s, %s, %s)",
+                "INSERT INTO backup_sw (ip, model, serial, created_on, file_path, content) VALUES ( %s, %s, %s, %s, %s, %s)",
                 [ip, ser_dict['Model Name'], ser_dict['Serial-Number'], dat, file_path, content])
             conn.commit()
             conn.close()
