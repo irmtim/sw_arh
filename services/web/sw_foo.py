@@ -28,7 +28,7 @@ def sw_auto_detect(ip):
 
 
 def netmiko_log():
-    d = datetime.datetime.now().replace(microsecond=0)
+    d = datetime.datetime.today().replace(microsecond=0)
     f = f"{config.file_log_path1}{d.strftime('%Y_%d_%m_%H_%M_%S')}.log"
     logging.basicConfig(filename=f, level=logging.DEBUG)
     logg = logging.getLogger("netmiko")
@@ -36,7 +36,7 @@ def netmiko_log():
 
 
 def sw_srh_log(string):
-    d = datetime.datetime.now().replace(microsecond=0)
+    d = datetime.datetime.today().replace(microsecond=0)
     f = f"{config.file_log_path2}{d.strftime('%Y_%d_%m_%H_%M_%S')}.log"
     with open(f, 'w', encoding='UTF-8') as file:
         file.write(string)
@@ -226,7 +226,7 @@ for m, st in config.dev_path:
                 print(f'Initiating show switch: {IP.strip()}')
                 ser_dict = func_ser[mod][m](net_connect)
                 content = func_conf[mod][m](net_connect)
-                dat = datetime.datetime.now().replace(microsecond=0)
+                dat = datetime.datetime.today().replace(microsecond=0)
                 file_path = f"{config.file_path}{IP.strip().replace('.', '_')}@{dat.strftime('%Y_%d_%m_%H_%M_%S')}.cfg"
                 stat = vc_db(IP.strip(), content, ser_dict, file_path)
                 err_log = err_log + f'{stat}\n'

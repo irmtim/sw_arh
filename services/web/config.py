@@ -45,6 +45,8 @@ root_path = "/usr/src/app"
 
 tab_name = 'backup_sw'
 
+schedule_time = 600      # time out in hours
+
 url_create = {
     'drivername': "postgresql",
     'username': "pg",

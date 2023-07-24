@@ -46,6 +46,10 @@ def create_tab():
 def start_inv():
     import sw_foo
 
+@cli.command("scheduler")
+def scheduler():
+    import scheduler
+
 
 def global_ldap_authentication(user_name, user_pwd, group=adm_group):
     flag = False
