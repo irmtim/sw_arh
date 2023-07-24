@@ -1,1 +1,7 @@
 ﻿sudo docker cp install/tplink_jetstream.py flask-web-1:/usr/local/lib/python3.11/site-packages/netmiko/tplink/tplink_jetstream.py
+
+docker-compose exec web python app.py start_inv
+
+docker-compose exec web python app.py crete_tab
+
+

@@ -3,11 +3,11 @@ version: '3.8'
 services:
   web:
     build: ./services/web
-    command: python project/app.py run -h 0.0.0.0
+    command: gunicorn --bind 0.0.0.0:5000 app:app
     volumes:
       - ./services/web/:/usr/src/app/
-    ports:
-      - 5001:5000
+    expose:
+      - 5000
     env_file:
       - ./.env.dev
 
@@ -19,6 +19,17 @@ services:
       - db
 
 
+  nginx:
+    build: ./services/nginx
+    ports:
+      - "1337:80"
+
+    networks:
+      net:
+        ipv4_address: 10.5.0.5
+
+    depends_on:
+      - web
 
   db:
     container_name: postgres
@@ -46,7 +57,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: "pg@rpz.ru"
       PGADMIN_DEFAULT_PASSWORD: "pg"
     ports:
-      - "5050:80"
+      - "5050:81"
     restart: unless-stopped
     networks:
       net:
