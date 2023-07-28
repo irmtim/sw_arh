@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, create_engine
 from sqlalchemy.orm import declarative_base
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import config
 from sqlalchemy.engine import URL
 
@@ -27,7 +27,7 @@ class Backup_sw(Base):
     model = Column(String(100), nullable=False)
     ip = Column(String(20), nullable=False)
     serial = Column(String(50), nullable=False)
-    created_on = Column(DateTime(), default=datetime.now)
+    created_on = Column(DateTime(), default=datetime.now())
     file_path = Column(String(100), nullable=False)
     content = Column(String, nullable=False)
 

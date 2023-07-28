@@ -9,7 +9,6 @@ def job():
     runpy.run_module(mod_name='sw_foo')
 
 
-# schedule.every().day.at("20:55").do(job)
 # schedule.every(schedule_time).hours.do(job)
 schedule.every(schedule_time).minutes.do(job)
 

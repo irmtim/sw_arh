@@ -1,26 +1,24 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file, cli, request
 from ldap3 import Server, Connection, ALL, SUBTREE
 import os
 from forms import LoginForm
-import db_create
-from config import url_create, ldsp_server, root_dn, adm_group, tab_name, UPLOAD_FOLDER, root_path, template_folder, d_name
+from config import url_create, ldsp_server, root_dn, adm_group, tab_name, UPLOAD_FOLDER, d_name, schedule_time
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
-from flask import request
 from datetime import datetime
-from flask.cli import FlaskGroup
+import schedule
+import runpy
+import time
+import db_create
 
-app = Flask(__name__,
-            template_folder=template_folder,
-            root_path=root_path
-            )
+app = Flask(__name__)
 
 app.config[
     'SQLALCHEMY_DATABASE_URI'] = f"{url_create['drivername']}://{url_create['username']}:{url_create['password']}" \
                                  f"@{url_create['host']}:{url_create['port']}/{url_create['database']}"
 
-cli = FlaskGroup(app)
+cli = cli.FlaskGroup(app)
 
 # UPLOAD_FOLDER = f"/usr/src/app/data/ARH_SW"
 
@@ -46,9 +44,18 @@ def create_tab():
 def start_inv():
     import sw_foo
 
+
+def job():
+    print(f'Start')
+    runpy.run_module(mod_name='sw_foo')
+
+
 @cli.command("scheduler")
 def scheduler():
-    import scheduler
+    schedule.every(schedule_time).minutes.do(job)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 def global_ldap_authentication(user_name, user_pwd, group=adm_group):
@@ -105,19 +112,25 @@ def handle_switches_():
         {
             "ip": switch.ip,
             "model": switch.model,
-            "serial": switch.serial
-            # "created_on": switch.created_on,
+            "serial": switch.serial,
+            "created_on": switch.created_on,
             # 'file_path': switch.file_path
         } for switch in switches]
+    ip_list, sw_list = [], []
+    for i in sorted(results, key=lambda i: i['created_on']):
+        if i['ip'] not in ip_list:
+            ip_list.append(i['ip'])
+            i.pop('created_on')
+            sw_list.append(i)
 
-    return results
+    return sw_list
 
 
 def arh_switch(ip):
     switches = SwitchArh.query.all()
     results = [
         {
-            #"id": switch.id,
+            # "id": switch.id,
             "model": switch.model,
             "serial": switch.serial,
             "created_on": switch.created_on,
@@ -175,4 +188,3 @@ def images(d):
 
 if __name__ == '__main__':
     cli()
-

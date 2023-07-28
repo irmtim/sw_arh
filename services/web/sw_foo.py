@@ -2,12 +2,13 @@ from netmiko import ConnectHandler
 from netmiko import NetMikoTimeoutException
 from paramiko.ssh_exception import SSHException
 from netmiko import NetmikoAuthenticationException
-import datetime
+from datetime import datetime, timezone, timedelta
 from re import search
 import psycopg2
 import logging
 import config
 from netmiko.ssh_autodetect import SSHDetect
+
 
 
 def sw_auto_detect(ip):
@@ -28,19 +29,18 @@ def sw_auto_detect(ip):
 
 
 def netmiko_log():
-    d = datetime.datetime.today().replace(microsecond=0)
-    f = f"{config.file_log_path1}{d.strftime('%Y_%d_%m_%H_%M_%S')}.log"
+    d_ta = datetime.now(timezone(timedelta(hours=3))).replace(microsecond=0)
+    f = f"{config.file_log_path1}{d_ta.strftime('%Y_%d_%m_%H_%M_%S')}.log"
     logging.basicConfig(filename=f, level=logging.DEBUG)
     logg = logging.getLogger("netmiko")
     return logg
 
 
 def sw_srh_log(string):
-    d = datetime.datetime.today().replace(microsecond=0)
-    f = f"{config.file_log_path2}{d.strftime('%Y_%d_%m_%H_%M_%S')}.log"
+    d_ta = datetime.now(timezone(timedelta(hours=3))).replace(microsecond=0)
+    f = f"{config.file_log_path2}{d_ta.strftime('%Y_%d_%m_%H_%M_%S')}.log"
     with open(f, 'w', encoding='UTF-8') as file:
         file.write(string)
-
 
 
 def ssh_con(ip: str):
@@ -51,7 +51,7 @@ def ssh_con(ip: str):
             'password': config.sw_password,
             'device_type': d_t
         }
-        connect_err_log = f'{RTR["ip"]} type: {RTR["device_type"]} {datetime.datetime.now()} '
+        connect_err_log = f'{RTR["ip"]} type: {RTR["device_type"]} {datetime.now(timezone(timedelta(hours=3))).replace(microsecond=0)} '
         try:
             net_conn = ConnectHandler(**RTR)
 
@@ -187,10 +187,10 @@ def vc_db(ip, content, ser_dict, file_path) -> str:
         if data is None or data[0] != content:
             curs.execute(
                 "INSERT INTO backup_sw (ip, model, serial, created_on, file_path, content) VALUES ( %s, %s, %s, %s, %s, %s)",
-                [ip, ser_dict['Model Name'], ser_dict['Serial-Number'], dat, file_path, content])
+                [ip, ser_dict['Model Name'], ser_dict['Serial-Number'], da_ta, file_path, content])
             conn.commit()
             conn.close()
-            flag = f'Backup {ip} is done. New ver: {dat}'
+            flag = f'Backup {ip} is done. New ver: {da_ta}'
             return flag
 
         else:
@@ -226,8 +226,8 @@ for m, st in config.dev_path:
                 print(f'Initiating show switch: {IP.strip()}')
                 ser_dict = func_ser[mod][m](net_connect)
                 content = func_conf[mod][m](net_connect)
-                dat = datetime.datetime.today().replace(microsecond=0)
-                file_path = f"{config.file_path}{IP.strip().replace('.', '_')}@{dat.strftime('%Y_%d_%m_%H_%M_%S')}.cfg"
+                da_ta = datetime.now(timezone(timedelta(hours=3))).replace(microsecond=0)
+                file_path = f"{config.file_path}{IP.strip().replace('.', '_')}@{da_ta.strftime('%Y_%d_%m_%H_%M_%S')}.cfg"
                 stat = vc_db(IP.strip(), content, ser_dict, file_path)
                 err_log = err_log + f'{stat}\n'
                 if 'done' in stat:
