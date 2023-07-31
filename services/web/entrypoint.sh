@@ -1,5 +1,5 @@
 #!/bin/sh
 
-python app.py scheduler
+python sceduller.py
 
 exec "$@"

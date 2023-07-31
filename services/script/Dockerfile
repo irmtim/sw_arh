@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /usr/src/app/
 
-#ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+CMD ["python", "scheduler.py"]

@@ -11,7 +11,6 @@ import schedule
 import runpy
 import time
 import db_create
-
 app = Flask(__name__)
 
 app.config[
@@ -52,6 +51,7 @@ def job():
 
 @cli.command("scheduler")
 def scheduler():
+    print('Start .CFG Invent')
     schedule.every(schedule_time).minutes.do(job)
     while True:
         schedule.run_pending()
@@ -186,5 +186,7 @@ def images(d):
     return send_file(ff, mimetype='text/csv', as_attachment=True)
 
 
+
 if __name__ == '__main__':
     cli()
+

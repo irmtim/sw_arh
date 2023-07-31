@@ -43,7 +43,21 @@ services:
       db:
         condition: service_healthy
 
+  script:
+    restart: always
+    build: ./services/script
 
+    volumes:
+      - ./services/script/:/usr/src/app/
+      - ./services/web/data:/usr/src/app/data
+
+    networks:
+      net:
+        ipv4_address: 10.5.0.6
+
+    depends_on:
+      db:
+        condition: service_healthy
 
   nginx:
     build: ./services/nginx
@@ -56,8 +70,6 @@ services:
 
     depends_on:
       - web
-
-
 
   pgadmin:
     container_name: pgadmin
