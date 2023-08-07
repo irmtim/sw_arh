@@ -102,5 +102,7 @@ model_sw = {
                  'config_command_string': 'show running-config'},
     'tp_sg34_X': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
                   'Model Name': 'Hardware Version', 'Serial-Number': 'Serial Number',
-                  'config_command_string': 'show startup-config'}
+                  'config_command_string': 'show startup-config'},
+    'd_3000': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'Device Type',
+                   'Serial-Number': 'Serial Number', 'config_command_string': 'show config'}
 }

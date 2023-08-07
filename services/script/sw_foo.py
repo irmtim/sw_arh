@@ -160,7 +160,7 @@ def d_1210_conf(net_conn) -> str:
         command_string=command,
         strip_prompt=False,
         strip_command=False,
-        last_read=10.0
+        last_read=15.0
     )
     pattern, content = '#---------', ''
     flag = 0
