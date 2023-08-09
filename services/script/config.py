@@ -62,7 +62,7 @@ model_sw = {
     'd_1210_': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'Device Type',
                 'Serial-Number': 'System Serial Number',
                 'config_command_string': 'show config current_config'},
-    'd_1510_X': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
+    'd_1510_X_P': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
                  'Serial-Number': 'Serial-Number',
                  'config_command_string': 'show running-config'},
     'tp_sg34_X': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',

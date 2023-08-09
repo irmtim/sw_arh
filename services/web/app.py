@@ -123,8 +123,7 @@ def handle_switches_():
             i.pop('created_on')
             sw_list.append(i)
 
-    return sw_list
-
+    return sorted(sw_list, key=lambda j: j['ip'])
 
 def arh_switch(ip):
     switches = SwitchArh.query.all()
