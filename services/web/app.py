@@ -123,7 +123,7 @@ def handle_switches_():
             i.pop('created_on')
             sw_list.append(i)
 
-    return sorted(sw_list, key=lambda j: j['ip'])
+    return sorted(sw_list, key=lambda j: int(j['ip'].split('.')[3]))
 
 def arh_switch(ip):
     switches = SwitchArh.query.all()
@@ -136,7 +136,7 @@ def arh_switch(ip):
             # 'file_path': switch.file_path
         } for switch in switches if switch.ip == ip]
 
-    return results
+    return sorted(results, key=lambda i: i['created_on'], reverse=1)
 
 
 def data_switch(data):
