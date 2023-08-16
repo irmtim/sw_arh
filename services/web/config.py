@@ -1,40 +1,5 @@
-##################################################
-# cfg default
-##################################################
-
-# ldsp_server = 'ldap://173.34.5.1:389'
-#
-# root_dn = "dc=rpz,dc=local"
-#
-# d_name = '@rpz.local'
-#
-# sw_password = '333333'
-#
-# sw_username = 'adm'
-#
-# db_type = 'postgresql'
-#
-# db_ip = '10.5.0.2'
-#
-# db_pass = 'pg'
-#
-# db_user = 'pg'
-#
-# db_port = '5432'
-#
-# db_db = 'SW_DB'
-#
-# adm_group = 'Switch_arh_admin'
-#
-# tab_name = 'backup_sw'
-#
-# schedule_time = 300  # time out in hours
-
-##################################################
-# cfg from schedule.ini
-##################################################
 with open('/usr/src/app/data/scheduler.ini', 'r', encoding='UTF-8') as file:
-# with open('/home/flask/services/web/data/scheduler.ini', 'r', encoding='UTF-8') as file:
+# with open('/home/flask/services/script/data/scheduler.ini', 'r', encoding='UTF-8') as file:
     conf_dict = dict()
     for ins in file.read().split('\n'):
         if '==' in ins:
@@ -78,14 +43,17 @@ url_create = {
     'port': db_port
 }
 
-device_tupl = ('dlink_ds', 'tplink_jetstream')
+# device_tupl = ('dlink_ds', 'tplink_jetstream')
 # device_tupl = ('dlink_ds', 'tplink_jetstream', 'mikrotik_routeros', 'hp_comware')
 
-dev_path = ((0, "/usr/src/app/data/DEV_SW/sw.txt"), (1, "/usr/src/app/data/DEV_SW/dgs_1210_sw.txt"))
+# dev_path = ((0, "/usr/src/app/data/DEV_SW/sw.txt"), (1, "/usr/src/app/data/DEV_SW/dgs_1210_sw.txt"))
 
 file_path = f"/usr/src/app/data/ARH_SW/"
 file_log_path1 = f"/usr/src/app/data/LOG_SW/netmiko/"
 file_log_path2 = f"/usr/src/app/data/LOG_SW/app/"
+files_ip_path_create = f"/usr/src/app/data/DEV_SW/dev/"
+
+files_ip_path = f"/usr/src/app/data/DEV_SW/"
 
 UPLOAD_FOLDER = f"/usr/src/app/data/ARH_SW"
 
@@ -93,16 +61,62 @@ template_folder = "/usr/src/app/templates"
 
 root_path = "/usr/src/app"
 
-model_sw = {
-    'd_1210_': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'Device Type',
-                'Serial-Number': 'System Serial Number',
-                'config_command_string': 'show config current_config'},
-    'd_1510_X': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
-                 'Serial-Number': 'Serial-Number',
-                 'config_command_string': 'show running-config'},
-    'tp_sg34_X': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
+model_sw_dict = {
+    'DGS-1250-28X': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
+                 'Serial-Number': 'Serial-Number', 'config_command_string': 'show running-config',
+                'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 0, 'func_conf': 1},
+
+    'DGS-1510-52': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
+                 'Serial-Number': 'Serial-Number', 'config_command_string': 'show running-config',
+                'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 0, 'func_conf': 1},
+
+    'DGS-1510-52X': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
+                 'Serial-Number': 'Serial-Number', 'config_command_string': 'show running-config',
+                 'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 0, 'func_conf': 1},
+
+    'DGS-1510-28LME Gigabit Ethernet Switch': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'Device Type',
+                    'Serial-Number': 'Serial Number', 'config_command_string': 'show config current_config', 'sw_username': sw_username,
+                       'sw_password': sw_password,  'delimiter': ':', 'func_ser': 1, 'func_conf': 2},
+
+    'TL-SG3448X 1.0': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
                   'Model Name': 'Hardware Version', 'Serial-Number': 'Serial Number',
-                  'config_command_string': 'show startup-config'},
-    'd_3000': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'Device Type',
-                   'Serial-Number': 'Serial Number', 'config_command_string': 'show config'}
+                  'config_command_string': 'show startup-config',
+                  'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': '-', 'func_ser': 1, 'func_conf': 0},
+
+    'TL-SG3428X 1.0': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
+                  'Model Name': 'Hardware Version', 'Serial-Number': 'Serial Number',
+                  'config_command_string': 'show startup-config', 'sw_username': sw_username,
+                  'sw_password': sw_password, 'delimiter': '-', 'func_ser': 1, 'func_conf': 0},
+
+    'TL-SX3016F 1.0': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
+                  'Model Name': 'Hardware Version', 'Serial-Number': 'Serial Number',
+                   'config_command_string': 'show startup-config', 'sw_username': sw_username,
+                   'sw_password': sw_password,  'delimiter': '-', 'func_ser': 1, 'func_conf': 0},
+
+    'DGS-3000-28SC Gigabit Ethernet Switch': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch',
+                  'Model Name': 'Device Type', 'Serial-Number': 'Serial Number',
+                  'config_command_string': 'show config current_config', 'sw_username': sw_username,
+                  'sw_password': sw_password,  'delimiter': ':', 'func_ser': 1, 'func_conf': 2},
+
+    'DGS-3000-52X Gigabit Ethernet Switch': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch',
+                  'Model Name': 'Device Type', 'Serial-Number': 'Serial Number',
+                  'config_command_string': 'show config current_config', 'sw_username': sw_username,
+                  'sw_password': sw_password,  'delimiter': ':', 'func_ser': 1, 'func_conf': 2},
+
+    'DGS-1210-28XME': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'Device Type',
+                    'Serial-Number': 'System Serial Number', 'config_command_string': 'show config current_config',
+                     'sw_username': sw_username, 'sw_password': sw_password,  'delimiter': ':', 'func_ser': 1, 'func_conf': 2},
+
+    'RB1100x4': {'device_type': 'mikrotik_routeros', 'serial_command_string': '/system routerboard print', 'Model Name': 'model',
+                     'Serial-Number': 'serial-number', 'config_command_string': '/export',
+                     'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 1,
+                     'func_conf': 3}
+
+
+
+    # 'd_1210_28_c1': {'device_type': 'dlink_ds', 'serial_command_string': 'show switch', 'Model Name': 'System name',
+    #                  'Serial-Number': 'System serial number', 'config_command_string': 'show config current_config',
+    #                  'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': '-', 'func_ser': 0,
+    #                  'func_conf': 0}
 }
+
