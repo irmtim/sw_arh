@@ -79,7 +79,7 @@ model_sw_dict = {
                     'Serial-Number': 'Serial Number', 'config_command_string': 'show config current_config', 'sw_username': sw_username,
                        'sw_password': sw_password,  'delimiter': ':', 'func_ser': 1, 'func_conf': 2},
 
-    'TL-SG3448X 1.0': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
+    'TL-SG3452X 1.0': {'device_type': 'tplink_jetstream', 'serial_command_string': 'show system-info',
                   'Model Name': 'Hardware Version', 'Serial-Number': 'Serial Number',
                   'config_command_string': 'show startup-config',
                   'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': '-', 'func_ser': 1, 'func_conf': 0},
@@ -111,7 +111,15 @@ model_sw_dict = {
     'RB1100x4': {'device_type': 'mikrotik_routeros', 'serial_command_string': '/system routerboard print', 'Model Name': 'model',
                      'Serial-Number': 'serial-number', 'config_command_string': '/export',
                      'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 1,
-                     'func_conf': 3}
+                     'func_conf': 3},
+
+    'QSW-4600-52TX-POE': {'device_type': 'cisco_ios', 'serial_command_string': 'show version', 'Model Name': 'Slot 0',
+                 'Serial-Number': 'System serial number', 'config_command_string': 'show running-config',
+                 'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 1, 'func_conf': 3},
+
+    'DXS-3400-24SC': {'device_type': 'dlink_ds', 'serial_command_string': 'show unit', 'Model Name': 'Model Name',
+                 'Serial-Number': 'Serial-Number', 'config_command_string': 'show running-config',
+                'sw_username': sw_username, 'sw_password': sw_password, 'delimiter': ':', 'func_ser': 0, 'func_conf': 1}
 
 
 
