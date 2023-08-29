@@ -1,0 +1,41 @@
+//
+// Loading element
+//
+
+.loading-container {
+	// border-radius: 0.475rem;
+	// box-shadow: $box-shadow;//rgb(82 63 105 / 15%) 0px 0px 50px 0px;
+	// background-color: rgba($dark, 0.0);
+	color: $gray-700;//rgb(126, 130, 153);
+	font-weight: 500;
+	margin: 0px;
+	width: 100%;
+	padding: 1rem 2rem;
+	top: 0;
+	left: 0;
+	position: absolute;
+	text-align: center;
+	height: 100%;
+	cursor: wait;
+
+	
+
+	div {
+		border-radius: 0.475rem;
+    box-shadow: $box-shadow;
+    background-color: $white;
+    color: $gray-700;//#7e8299,
+    margin: 0;
+    width: auto;
+    padding: 1rem 2rem;
+		position: absolute;
+    top: calc(50%);
+    left: calc(50%);
+		transform: translate(-50%, -50%);
+	}
+}
+
+.loading-dark {
+	// background-color: rgba($dark, 0.20);
+	transition: all 1s;
+}
